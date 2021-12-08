@@ -28,6 +28,7 @@ import { __experimentalGetGradientObjectByGradientValue } from '../gradients';
 import useSetting from '../use-setting';
 import useCommonSingleMultipleSelects from './use-common-single-multiple-selects';
 import useMultipleOriginColorsAndGradients from './use-multiple-origin-colors-and-gradients';
+import classNames from 'classnames';
 
 // translators: first %s: The type of color or gradient (e.g. background, overlay...), second %s: the color name or value (e.g. red or #ff0000)
 const colorIndicatorAriaLabel = __( '(%s: color %s)' );
@@ -145,26 +146,25 @@ export const PanelColorGradientSettingsInner = ( {
 			title={ showTitle ? titleElement : undefined }
 			{ ...props }
 		>
-			<ItemGroup isBordered isSeparated>
+			<ItemGroup isBordered isSeparated className="block-editor-panel-color-gradient-settings__item-group">
 				{ settings.map( ( setting, index ) => (
 					<Dropdown
+						className="block-editor-panel-color-gradient-settings__dropdown"
 						key={ index }
-						contentClassName="block-editor-panel-color-gradient-settings__dropdown"
-						renderToggle={ ( { onToggle } ) => {
+						contentClassName="block-editor-panel-color-gradient-settings__dropdown-content"
+						renderToggle={ ( { isOpen, onToggle } ) => {
 							return (
 								<Item
 									onClick={ onToggle }
-									className="block-editor-panel-color-gradient-settings__item"
+									className={ classNames( 'block-editor-panel-color-gradient-settings__item', { 'is-open': isOpen } ) }
 								>
 									<HStack justify="flex-start">
-										<FlexItem>
-											<ColorIndicator
-												colorValue={
-													setting.gradientValue ??
-													setting.colorValue
-												}
-											/>
-										</FlexItem>
+										<ColorIndicator
+											colorValue={
+												setting.gradientValue ??
+												setting.colorValue
+											}
+										/>
 										<FlexItem>{ setting.label }</FlexItem>
 									</HStack>
 								</Item>

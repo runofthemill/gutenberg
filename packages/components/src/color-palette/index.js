@@ -10,7 +10,7 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf, isRTL } from '@wordpress/i18n';
 import { useCallback, useMemo } from '@wordpress/element';
 
 /**
@@ -132,11 +132,15 @@ export default function ColorPalette( {
 			enableAlpha={ enableAlpha }
 		/>
 	);
-
+	let dropdownPosition;
+	if ( __experimentalIsRenderedInSidebar ) {
+		dropdownPosition = isRTL() ? 'bottom right' : 'bottom left';
+	}
 	return (
 		<VStack spacing={ 3 } className={ className }>
 			{ ! disableCustomColors && (
 				<Dropdown
+					position={ dropdownPosition }
 					contentClassName={ classnames(
 						'components-color-palette__custom-color-dropdown-content',
 						{
